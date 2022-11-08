@@ -22,13 +22,14 @@ loadingManager.onError = () => {
 };
 
 const textureLoader = new THREE.TextureLoader(loadingManager);
-const colorTexture = textureLoader.load("/textures/minecraft.png");
-const alphaTexture = textureLoader.load("/textures/door/alpha.jpg");
-const heightTexture = textureLoader.load("/textures/door/height.jpg");
-const normalTexture = textureLoader.load("/textures/door/normal.jpg");
+const colorTexture = textureLoader.load("/textures/Rock/Dried_Soil_001_COLOR.jpg");
+const alphaTexture = textureLoader.load("/textures/Rock/alpha.jpg");
+const heightTexture = textureLoader.load("/textures/Rock/Dried_Soil_001_DISP.jpg");
+const normalTexture = textureLoader.load("/textures/Rock/Dried_Soil_001_NORM.jpg");
 const ambientOcclusionTexture = textureLoader.load(
-  "/textures/door/ambientOcclusion.jpg"
+  "/textures/Rock/Dried_Soil_001_OCC.jpg"
 );
+const reflectionTexture=textureLoader.load("/textures/Rock/Dried_Soil_001_SPEC.jpg")
 const metalnessTexture = textureLoader.load("/textures/door/metalness.jpg");
 const roughnessTexture = textureLoader.load("/textures/door/roughness.jpg");
 
@@ -60,8 +61,9 @@ const scene = new THREE.Scene();
 /**
  * Object
  */
-const geometry = new THREE.BoxGeometry(1, 1, 1);
+const geometry = new THREE.SphereGeometry(1,32,32);
 const material = new THREE.MeshBasicMaterial({ map: colorTexture });
+material.normalmap=normalTexture;
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
 

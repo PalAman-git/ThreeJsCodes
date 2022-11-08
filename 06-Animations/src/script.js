@@ -11,7 +11,6 @@ const cube = new THREE.Mesh(
   new THREE.MeshBasicMaterial({ color: "blue" })
 );
 scene.add(cube);
-
 const axesHelper = new THREE.AxesHelper();
 scene.add(axesHelper);
 

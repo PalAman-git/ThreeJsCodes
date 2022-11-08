@@ -9,13 +9,30 @@ import { DoubleSide, PointLight } from "three";
 
 const textureloader=new THREE.TextureLoader();
 const cubeTextureLoader=new THREE.CubeTextureLoader()
+
 const doorAlphaTexture=textureloader.load('/textures/door/alpha.jpg');
 const doorAmbientOcclusionTexture=textureloader.load('/textures/door/ambientOcclusion.jpg');
 const doorHeightTexture=textureloader.load('/textures/door/height.jpg');
-const doorNormalTexture=textureloader.load('/textures/stone/normal.jpg');
+const doorNormalTexture=textureloader.load('/textures/door/normal.jpg');
 const doorMetalnessTexture=textureloader.load('/textures/door/metalness.jpg');
 const doorRoughtnessTexture=textureloader.load('/textures/door/roughness.jpg');
 const doorColorTexture=textureloader.load('/textures/door/color.jpg');
+
+
+const lavaColorTexture=textureloader.load('/textures/Lava/Lava_001_COLOR.png');
+const lavaNormalTexture=textureloader.load('/textures/Lava/Lava_001_NRM.png');
+const lavaHeightTexture=textureloader.load('/textures/Lava/Lava_001_DISP.png');
+const lavaAmbientOcclusionTexture=textureloader.load('/textures/Lava/Lava_001_OCC.png');
+const lavaReflectionTexture=textureloader.load('/textures/Lava/Lava_001_SPEC.png');
+
+
+const rockColorTexture=textureloader.load('/textures/Rock/Dried_Soil_001_COLOR.jpg');
+const rockNormalTexture=textureloader.load('/textures/Rock/Dried_Soil_001_NRM.jpg');
+const rockHeightTexture=textureloader.load('/textures/Rock/Dried_Soil_001_DISP.png');
+const rockAmbientOcclusionTexture=textureloader.load('/textures/Rock/Dried_Soil_001_OCC.jpg');
+const rockReflectionTexture=textureloader.load('/textures/Rock/Dried_Soil_001_SPEC.jpg');
+
+
 const matcapTexture=textureloader.load('/textures/matcaps/8.png');
 const gradient=textureloader.load('/textures/gradients/3.jpg');
 
@@ -60,14 +77,15 @@ const scene = new THREE.Scene();
 
 // const material=new THREE.MeshToonMaterial();
 
-// const material=new THREE.MeshStandardMaterial();
-// material.map=doorColorTexture;
+const material=new THREE.MeshStandardMaterial();
+material.map=lavaColorTexture;
 // material.gradientMap=gradient;
-// material.displacementMap=doorHeightTexture
-// material.displacementScale=0.05
+material.displacementMap=lavaHeightTexture
+material.displacementScale=0.15
 // material.metalnessMap=doorMetalnessTexture
 // material.roughnessMap=doorRoughtnessTexture
-// material.normalMap=doorNormalTexture
+material.normalMap=lavaNormalTexture
+material.aoMap=lavaAmbientOcclusionTexture
 // material.alphaMap=doorAlphaTexture
 // material.transparent=true;
 
@@ -75,10 +93,10 @@ const scene = new THREE.Scene();
 //environment map is cube texture it is not a simple one 
 //to load cube texture we must use the CubeTextureLoader instead of the TextureLoader
 
-const material=new THREE.MeshStandardMaterial()
-material.metalness=0.7
-material.roughness=0;
-material.envMap=environmentMapTexture
+// const material=new THREE.MeshStandardMaterial()
+// material.metalness=0.7
+// material.roughness=0;
+// material.envMap=environmentMapTexture
 
 
 /**
@@ -92,7 +110,7 @@ scene.add(ambientLight);
 
 
 
-const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 64, 64), material);
+const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.25, 64, 64), material);
 sphere.position.x = -1.5;
 const plane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1,100,100), material);
 const torus = new THREE.Mesh(
@@ -162,13 +180,13 @@ const tick = () => {
   const elapsedTime = clock.getElapsedTime();
 
   //update objects
-  sphere.rotation.y = 0.1 * elapsedTime;
-  plane.rotation.y = 0.1 * elapsedTime;
-  torus.rotation.y = 0.1 * elapsedTime;
+  // sphere.rotation.y = 0.1 * elapsedTime;
+  // plane.rotation.y = 0.1 * elapsedTime;
+  // torus.rotation.y = 0.1 * elapsedTime;
 
-  sphere.rotation.x = 0.15 * elapsedTime;
-  plane.rotation.x = 0.15 * elapsedTime;
-  torus.rotation.x = 0.15 * elapsedTime;
+  // sphere.rotation.x = 0.15 * elapsedTime;
+  // plane.rotation.x = 0.15 * elapsedTime;
+  // torus.rotation.x = 0.15 * elapsedTime;
 
   // Update controls
   controls.update();
