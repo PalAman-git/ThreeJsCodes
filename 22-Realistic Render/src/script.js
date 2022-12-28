@@ -3,6 +3,8 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as dat from "dat.gui";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
+
 
 /**
  * Debug
@@ -44,12 +46,12 @@ const textureLoader = new THREE.TextureLoader();
 const cubeTextureLoader = new THREE.CubeTextureLoader();
 
 const environmentMapTexture = cubeTextureLoader.load([
-  "/textures/environmentMaps/3/px.png",
-  "/textures/environmentMaps/3/nx.png",
-  "/textures/environmentMaps/3/py.png",
-  "/textures/environmentMaps/3/ny.png",
-  "/textures/environmentMaps/3/pz.png",
-  "/textures/environmentMaps/3/nz.png",
+  "/textures/environmentMaps/1/px.png",
+  "/textures/environmentMaps/1/nx.png",
+  "/textures/environmentMaps/1/py.png",
+  "/textures/environmentMaps/1/ny.png",
+  "/textures/environmentMaps/1/pz.png",
+  "/textures/environmentMaps/1/nz.png",
 ]);
 environmentMapTexture.encoding = THREE.sRGBEncoding;
 scene.background = environmentMapTexture;
@@ -65,10 +67,13 @@ gui
 /**
  * Models
  */
+ const dracoLoader = new DRACOLoader();
+ dracoLoader.setDecoderPath("/draco/"); 
 
 const gltfLoader = new GLTFLoader();
-gltfLoader.load("/models/FlightHelmet/glTF/FlightHelmet.gltf", (gltf) => {
-  gltf.scene.scale.set(10, 10, 10);
+gltfLoader.setDRACOLoader(dracoLoader);
+gltfLoader.load("/models/hamburger.glb", (gltf) => {
+  gltf.scene.scale.set(0.3, 0.3, 0.3);
   gltf.scene.position.set(0, -4, 0);
   gltf.scene.rotation.y = Math.PI * 0.5;
   gui
@@ -87,6 +92,10 @@ gltfLoader.load("/models/FlightHelmet/glTF/FlightHelmet.gltf", (gltf) => {
  */
 const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
 directionalLight.position.set(0.25, 3, -2.25);
+//for avoiding the burger to apply shadow on its own surface we use bias and normalBias
+//bias usually helps for flat surfaces
+//normalBias usually helps for rounded surfaces, which is our case
+directionalLight.shadow.normalBias=0.05;
 gui.add(directionalLight, "intensity").min(0).max(10).name("lightIntensity");
 gui
   .add(directionalLight.position, "x")
