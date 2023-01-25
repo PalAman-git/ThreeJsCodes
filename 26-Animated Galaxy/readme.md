@@ -14,3 +14,5 @@ npm run dev
 # Build for production in the dist/ directory
 npm run build
 ```
+
+Live Site at https://galaxy-pink.vercel.app/
